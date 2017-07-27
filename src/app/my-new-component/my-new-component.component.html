@@ -1,0 +1,16 @@
+<div style="display:block">
+                      <div style="display:block" *ngFor="let message of messages"  style="width:100%;">
+                                {{message.type}} : {{message.message}}
+                  </div>
+            <div>
+                    <div style="display:block">
+                        <input style="width:100%" class="mytext" placeholder="Type a message" #box (keyup.enter)="request=box.value;SubmitRequest();box.value='';"/>
+                    </div> 
+            </div>
+        </div> 
+          <div>
+            <h1>
+          {{readings_data}}
+            </h1>
+          </div>
+
