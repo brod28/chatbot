@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>MyDreamApp</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+</head>
+<body>
+    <p id="polygondetails">no polygon yet</p>
+    <div id="map"></div>
+</body>
+ <script>
+      // This example requires the Drawing library. Include the libraries=drawing
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=drawing">
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+        
+        map.addListener('click', showArrays);
+        var drawingManager = new google.maps.drawing.DrawingManager({
+          drawingMode: google.maps.drawing.OverlayType.MARKER,
+          drawingControl: true,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: ['polygon']
+          },
+          markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+          circleOptions: {
+            fillColor: '#ffff00',
+            fillOpacity: 1,
+            strokeWeight: 5,
+            clickable: false,
+            editable: true,
+            zIndex: 1
+          }
+        });
+        drawingManager.setMap(map);
+        google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+                    document.getElementsByTagName("p")[0].innerHTML=event.overlay.getPath().getArray();
+        });
+        
+      }
+      function showArrays(event) {
+        // Since this polygon has only one path, we can call getPath() to return the
+        // MVCArray of LatLngs.
+        var vertices = this.getPath();
+
+        var contentString = '<b>Bermuda Triangle polygon</b><br>' +
+            'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
+            '<br>';
+
+        // Iterate over the vertices.
+        for (var i =0; i < vertices.getLength(); i++) {
+          var xy = vertices.getAt(i);
+          contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
+              xy.lng();
+        }
+
+        // Replace the info window's content and position.
+     
+       
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1sXiM6QA3PCmytVymvJZH0-pjxCvdJGQ&libraries=drawing&callback=initMap"
+         async defer></script>
+</html>

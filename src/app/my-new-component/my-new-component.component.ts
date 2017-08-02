@@ -14,7 +14,9 @@ export class MyNewComponentComponent implements OnInit {
   public client:ApiAiClient;
   public readings_data:string="I know that you just landed on this screen and didn't spoke to agent yet";
   public messages=[
-    {message:"Hello, I am rent budget specialist and want to help you with your move to London, please let me know where are you moving from?",type:"agent"},
+    {message:"Nice to meet you John!",type:"agent"},
+    {message:"I'm Lani your rental budget specialist and I'm here to help you work out a budget for your move to London.",type:"agent"},
+    {message:"So let's start! Firstly, which city are you moving from?",type:"agent"}
   ];
   constructor() { }
 
@@ -28,12 +30,12 @@ export class MyNewComponentComponent implements OnInit {
     .then((response) => {
       this.response=response.result.fulfillment.speech;
       this.messages.push({message:this.request,type:"me"});
-      this.messages.push({message:this.response,type:"agent"});
-      if(this.messages.length>4){
+      let responsemessage=this.response.split("$$$");
+      responsemessage.forEach(element => {
+        this.messages.push({message:element,type:"agent"});
+      });
+      while(this.messages.length>6){
         this.messages.shift();
-      }
-      if(this.messages.length>4){
-        this.messages.shift();        
       }
       this.readings(response);
       console.log(this.messages);      
