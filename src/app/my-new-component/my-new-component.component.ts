@@ -8,45 +8,88 @@ import {ApiAiClient} from "api-ai-javascript";
 })
 export class MyNewComponentComponent implements OnInit {
   public title:string="Dima";
-
   public response:string = '';
   public request:string ='';
   public client:ApiAiClient;
   public readings_data:string="I know that you just landed on this screen and didn't spoke to agent yet";
-  public messages=[
-    {message:"Nice to meet you John!",type:"agent"},
-    {message:"I'm Lani your rental budget specialist and I'm here to help you work out a budget for your move to London.",type:"agent"},
-    {message:"So let's start! Firstly, which city are you moving from?",type:"agent"}
+  public messages=[];
+  /*
+    {message:"Hi Jenny! I'm Ben, your rental budget specialist. I was designed to help you to build your monthly budget for your move to London.",type:"agent"},
+    {message:"Would you like to know how much money you will need to live in London?",type:"agent"}
   ];
+  */
+  public pre_populated:string='Hi';
   constructor() { }
 
   ngOnInit() {
-    this.client = new ApiAiClient({accessToken: 'b266cf849ba2485a96dcdcee069f60d2'})
-  }
- 
-  SubmitRequest(){
-    console.log('request = ' + this.request);
-    this.client.textRequest(this.request)
+    this.client = new ApiAiClient({accessToken: '7038fb95c5384508a0886caf841ef9b8'})
+    this.client.eventRequest("WELCOME")
     .then((response) => {
-      this.response=response.result.fulfillment.speech;
-      this.messages.push({message:this.request,type:"me"});
-      let responsemessage=this.response.split("$$$");
-      responsemessage.forEach(element => {
-        this.messages.push({message:element,type:"agent"});
-      });
-      while(this.messages.length>6){
-        this.messages.shift();
-      }
-      this.readings(response);
-      console.log(this.messages);      
+      this.handleAPIAIresponse(response);
     })
     .catch((error) => {
-      this.response=error;
+      console.log(error);
+      this.response="sorry but something went wrong, try again in few minutes";
     })
   }
-  /**
-   * name
-   */
+ 
+
+  SubmitRequest(box_value){
+
+    // show the message on screen
+    this.request=box_value;
+    this.messages.push({message:this.request,type:"me"});
+    console.log('request = ' + this.request);
+
+    // send message to API AI and handle the response
+    this.client.textRequest(this.request)
+    .then((response) => {
+      this.handleAPIAIresponse(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      this.response="sorry but something went wrong, try again in few minutes";
+    })
+  }
+ 
+  handleAPIAIresponse(response){
+    this.response=response.result.fulfillment.speech;
+    let responsemessage=this.response.split("$$$");
+    responsemessage.forEach(element => {
+      this.messages.push({message:element,type:"agent"});
+    });
+    this.readings(response);
+    this.ScrollDown();    
+    
+    let fire_event=response.result.fulfillment.data.fire_event;
+    if(fire_event!=""){
+      this.client.eventRequest(fire_event)
+      .then((response) => {
+        this.handleAPIAIresponse(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        this.response="sorry but something went wrong, try again in few minutes";
+      })
+    }
+    console.log(this.messages);    
+  }
+
+  ScrollDown() {
+      setTimeout(function(){
+        var objDiv = document.getElementById("chatHeight");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      },200);
+      setTimeout(function(){
+        var objDiv = document.getElementById("chatHeight");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      },400);
+      setTimeout(function(){
+        var objDiv = document.getElementById("chatHeight");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      },1000);
+    }
+
   public readings(response) {
     this.readings_data="";
     if(response.result.fulfillment){

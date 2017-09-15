@@ -1,0 +1,160 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+/*header*/
+header {
+	background-color: #fff;
+    height: 70px;
+	padding: 0 7%;
+    color: #616774;
+	border-bottom: 1px solid #dad7d7;
+}
+.logo-box {
+	display: table;
+    height: 100%;
+}
+.logo-box img {
+	width: 150px;
+	margin-top: 17px;
+}
+
+/*mainCont*/
+.chatFullCont {
+	overflow: hidden;
+	height: calc(100vh - 73px);
+	padding: 0 2px 2px 2px;
+}
+.articleBox, .chatBox {
+	height: 100%;
+	border: 1px solid #dad7d7;
+	border-top: 0;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.chatBox {
+  font-family: Arial;
+  width: 50%;
+  float: left;  
+}
+.chatHeight {
+  overflow-y: auto;
+  height: calc(100vh - 136px);
+  padding: 15px 10px 0 10px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.chatBox, .sender, .recipient {
+  overflow: hidden;
+}
+.sender {
+  position: relative;
+  min-height: 40px;
+}
+.senderName {
+  display: table;
+  background-color: #276844;
+  color: #ffffff;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.senderName span {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 100%;
+}
+.sender p {
+  margin: 0 0 0 60px;
+  border: 1px solid #dedddd;
+  border-radius: 4px;
+  padding: 10px 15px;
+  max-width: 60%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.recipient, .sender {
+  margin: 20px 0;
+}
+.recipient p, .sender p {
+  font-size: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+  white-space: pre-wrap;
+
+}
+
+.sendMsg {
+  position: relative; 
+  margin-top: 20px;
+}
+.sendMsg input {
+	outline-style: none;
+}
+.sendMsg input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  border-color: #396ea0;
+  padding: 0 50px 0 10px;
+}
+.sendMsg input[type="submit"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  background-color: transparent;
+  font-size: 13px;
+  height: 100%;
+  color: #396ea0;
+  cursor: pointer;
+}
+
+.recipient p {
+  background-color: #0053aa;
+  border-radius: 50px;
+  float: right;
+  color: white;
+  padding: 10px 20px;
+}
+
+/*scrollbar*/
+.scrollbarStyle::-webkit-scrollbar-track {
+	border-radius: 10px;
+}
+.scrollbarStyle::-webkit-scrollbar {
+	width: 7px;
+}
+.scrollbarStyle::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #cccccc;
+}
+/*msg typing*/	
+.dots {
+	margin-left: 60px;
+    border-radius: 50px;
+    padding: 10px 15px;
+	display: inline-block;
+	border: 1px solid #dedddd;
+}
+.dots > span {
+	background-color: #dad9d9;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	display: inline-block;
+}
+.dots > span:not(:first-child) {
+	margin-left: 5px;
+}
+
