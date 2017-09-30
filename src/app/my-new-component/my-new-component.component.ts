@@ -111,7 +111,6 @@ export class MyNewComponentComponent implements OnInit {
         this.response="sorry but something went wrong, try again in few minutes";
       })
     }
-    console.log(this.messages); 
   }
 
   ScrollDown() {
@@ -132,7 +131,8 @@ export class MyNewComponentComponent implements OnInit {
   public readings(response) {
     this.readings_data="";
     if(response.result.fulfillment){
-      if(response.result.fulfillment.data){
+      if(response.result.fulfillment.data){      
+        this.readings_data=response.result.fulfillment.data.Infographics;
         let data =response.result.fulfillment.data;
         if(data.action=='input.city'){
             this.readings_data="I know you moving to "
